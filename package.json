@@ -1,5 +1,5 @@
 {
-  "name": "@fortawesome/angular-fontawesome",
+  "name": "@libertymp/angular-fontawesome",
   "version": "0.10.2",
   "description": "Angular Fontawesome, an Angular library",
   "scripts": {
@@ -17,13 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FortAwesome/angular-fontawesome"
+    "url": "https://github.com/liberty-mp/angular-fontawesome"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FortAwesome/angular-fontawesome/issues"
+    "url": "https://github.com/libertymp/angular-fontawesome/issues"
   },
-  "homepage": "https://github.com/FortAwesome/angular-fontawesome",
+  "homepage": "https://github.com/libertymp/angular-fontawesome",
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.0",
     "@angular-devkit/core": "~13.3.0",
@@ -41,9 +41,9 @@
     "@angular/language-service": "~13.3.0",
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
-    "@fortawesome/fontawesome-svg-core": "^6.1.0",
-    "@fortawesome/free-regular-svg-icons": "^6.1.0",
-    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@libertymp/fontawesome-svg-core": "^6.1.0",
+    "@libertymp/free-regular-svg-icons": "^6.1.0",
+    "@libertymp/free-solid-svg-icons": "^6.1.0",
     "@types/jasmine": "~4.0.0",
     "@types/node": "~16.11.26",
     "@typescript-eslint/eslint-plugin": "5.15.0",
@@ -80,8 +80,11 @@
     "svg"
   ],
   "peerDependencies": {
-    "@fortawesome/fontawesome-svg-core": "~1.2.27 || ~1.3.0-beta2 || ^6.1.0"
+    "@libertymp/fontawesome-svg-core": "~1.2.27 || ~1.3.0-beta2 || ^6.1.0"
   },
   "schematics": "./schematics/collection.json",
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "publishConfig": {
+    "access": "public"
+  }
 }
