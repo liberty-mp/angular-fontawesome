@@ -26,17 +26,14 @@ jobs:
           yarn --immutable
 
       - name: Build Library
-        run: yarn build
+        run: yarn build && yarn build:schematics
 
       - name: Publish
         run: |
-          yarn config set npmAuthToken ${NODE_AUTH_TOKEN}
-          yarn config set npmPublishRegistry "https://registry.yarnpkg.com"
-
           for d in dist/*; do
             pushd $d
 
-            yarn publish
+            npm publish
 
             popd
           done
