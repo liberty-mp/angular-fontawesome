@@ -71,6 +71,12 @@ export class FaIconComponent implements OnChanges {
    */
   @Input() a11yRole: string;
 
+  /**
+   * Specify the `id` attribute for the rendered <svg> element.
+   *
+   */
+  @Input() svgId: string;
+
   @HostBinding('innerHTML') renderedIconHTML: SafeHtml;
 
   private document = inject(DOCUMENT);
@@ -156,6 +162,7 @@ export class FaIconComponent implements OnChanges {
       symbol: this.symbol,
       attributes: {
         role: this.a11yRole,
+        id: this.svgId,
       },
     };
   }

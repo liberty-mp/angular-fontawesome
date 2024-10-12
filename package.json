@@ -1,6 +1,6 @@
 {
-  "name": "@fortawesome/angular-fontawesome",
-  "version": "0.15.0",
+  "name": "@libertymp/angular-fontawesome",
+  "version": "2.0.0",
   "description": "Angular Fontawesome, an Angular library",
   "scripts": {
     "test": "ng test angular-fontawesome --watch=false --browsers=ChromeCI",
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FortAwesome/angular-fontawesome"
+    "url": "https://github.com/liberty-mp/angular-fontawesome"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FortAwesome/angular-fontawesome/issues"
+    "url": "https://github.com/liberty-mp/angular-fontawesome/issues"
   },
-  "homepage": "https://github.com/FortAwesome/angular-fontawesome",
+  "homepage": "https://github.com/liberty-mp/angular-fontawesome",
   "devDependencies": {
     "@angular-devkit/build-angular": "patch:@angular-devkit/build-angular@npm%3A18.0.1#~/.yarn/patches/@angular-devkit-build-angular-npm-18.0.1-51eee52196.patch",
     "@angular-devkit/core": "^18.0.1",

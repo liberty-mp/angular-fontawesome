@@ -61,8 +61,13 @@
             "index": "projects/demo/src/index.html",
             "polyfills": ["zone.js"],
             "tsConfig": "projects/demo/tsconfig.app.json",
-            "assets": ["projects/demo/src/favicon.ico", "projects/demo/src/assets"],
-            "styles": ["projects/demo/src/styles.scss"],
+            "assets": [
+              "projects/demo/src/favicon.ico",
+              "projects/demo/src/assets"
+            ],
+            "styles": [
+              "projects/demo/src/styles.scss"
+            ],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,
@@ -123,15 +128,23 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/demo/tsconfig.spec.json",
             "karmaConfig": "projects/demo/karma.conf.js",
-            "assets": ["projects/demo/src/favicon.ico", "projects/demo/src/assets"],
-            "styles": ["projects/demo/src/styles.scss"],
+            "assets": [
+              "projects/demo/src/favicon.ico",
+              "projects/demo/src/assets"
+            ],
+            "styles": [
+              "projects/demo/src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/demo/**/*.ts", "projects/demo/**/*.html"]
+            "lintFilePatterns": [
+              "projects/demo/**/*.ts",
+              "projects/demo/**/*.html"
+            ]
           }
         },
         "e2e": {
