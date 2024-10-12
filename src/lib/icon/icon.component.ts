@@ -1,32 +1,33 @@
-import { Component, HostBinding, Input, OnChanges, Optional, SimpleChanges } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, HostBinding, inject, Input, OnChanges, Optional, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   FaSymbol,
-  findIconDefinition,
   FlipProp,
   icon,
-  IconDefinition,
+  IconDefinition as CoreIconDefinition,
   IconParams,
-  IconProp,
   parse,
   PullProp,
   RotateProp,
   SizeProp,
-  Styles,
   Transform,
 } from '@fortawesome/fontawesome-svg-core';
 import { FaConfig } from '../config';
 import { FaIconLibrary } from '../icon-library';
 import { faWarnIfIconDefinitionMissing } from '../shared/errors/warn-if-icon-html-missing';
 import { faWarnIfIconSpecMissing } from '../shared/errors/warn-if-icon-spec-missing';
-import { FaProps } from '../shared/models/props.model';
+import { AnimationProp, FaProps } from '../shared/models/props.model';
 import { faClassList } from '../shared/utils/classlist.util';
+import { ensureCss } from '../shared/utils/css';
 import { faNormalizeIconSpec } from '../shared/utils/normalize-icon-spec.util';
 import { FaStackItemSizeDirective } from '../stack/stack-item-size.directive';
 import { FaStackComponent } from '../stack/stack.component';
+import { IconDefinition, IconProp } from '../types';
 
 @Component({
   selector: 'fa-icon',
+  standalone: true,
   template: ``,
   host: {
     class: 'ng-fa-icon',
@@ -38,14 +39,21 @@ export class FaIconComponent implements OnChanges {
 
   /**
    * Specify a title for the icon.
+   *
    * This text will be displayed in a tooltip on hover and presented to the
    * screen readers.
    */
   @Input() title?: string;
-  @Input() spin?: boolean;
-  @Input() pulse?: boolean;
+
+  /**
+   * Icon animation.
+   *
+   * Most of the animations are only available when using Font Awesome 6. With
+   * Font Awesome 5, only 'spin' and 'spin-pulse' are supported.
+   */
+  @Input() animation?: AnimationProp;
+
   @Input() mask?: IconProp;
-  @Input() styles?: Styles;
   @Input() flip?: FlipProp;
   @Input() size?: SizeProp;
   @Input() pull?: PullProp;
@@ -54,7 +62,6 @@ export class FaIconComponent implements OnChanges {
   @Input() symbol?: FaSymbol;
   @Input() rotate?: RotateProp;
   @Input() fixedWidth?: boolean;
-  @Input() classes?: string[] = [];
   @Input() transform?: string | Transform;
 
   /**
@@ -72,6 +79,8 @@ export class FaIconComponent implements OnChanges {
 
   @HostBinding('innerHTML') renderedIconHTML: SafeHtml;
 
+  private document = inject(DOCUMENT);
+
   constructor(
     private sanitizer: DomSanitizer,
     private config: FaConfig,
@@ -87,23 +96,19 @@ export class FaIconComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.icon == null && this.config.fallbackIcon == null) {
-      return faWarnIfIconSpecMissing();
-    }
-
-    let iconToBeRendered: IconProp = null;
-    if (this.icon == null) {
-      iconToBeRendered = this.config.fallbackIcon;
-    } else {
-      iconToBeRendered = this.icon;
+      faWarnIfIconSpecMissing();
+      return;
     }
 
     if (changes) {
-      const iconDefinition = this.findIconDefinition(iconToBeRendered);
+      const iconDefinition = this.findIconDefinition(this.icon ?? this.config.fallbackIcon);
       if (iconDefinition != null) {
         const params = this.buildParams();
-        this.renderIcon(iconDefinition, params);
+        ensureCss(this.document, this.config);
+        const renderedIcon = icon(iconDefinition, params);
+        this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(renderedIcon.html.join('\n'));
       }
     }
   }
@@ -119,26 +124,25 @@ export class FaIconComponent implements OnChanges {
     this.ngOnChanges({});
   }
 
-  protected findIconDefinition(i: IconProp | IconDefinition): IconDefinition | null {
+  protected findIconDefinition(i: IconProp | IconDefinition): CoreIconDefinition | null {
     const lookup = faNormalizeIconSpec(i, this.config.defaultPrefix);
     if ('icon' in lookup) {
-      return lookup;
+      return lookup as CoreIconDefinition;
     }
 
     const definition = this.iconLibrary.getIconDefinition(lookup.prefix, lookup.iconName);
     if (definition != null) {
-      return definition;
+      return definition as CoreIconDefinition;
     }
 
     faWarnIfIconDefinitionMissing(lookup);
     return null;
   }
 
-  protected buildParams() {
+  protected buildParams(): IconParams {
     const classOpts: FaProps = {
       flip: this.flip,
-      spin: this.spin,
-      pulse: this.pulse,
+      animation: this.animation,
       border: this.border,
       inverse: this.inverse,
       size: this.size || null,
@@ -153,19 +157,13 @@ export class FaIconComponent implements OnChanges {
     return {
       title: this.title,
       transform: parsedTransform,
-      classes: [...faClassList(classOpts), ...this.classes],
+      classes: faClassList(classOpts),
       mask: this.mask != null ? this.findIconDefinition(this.mask) : null,
-      styles: this.styles != null ? this.styles : {},
       symbol: this.symbol,
       attributes: {
         role: this.a11yRole,
         id: this.svgId,
       },
     };
-  }
-
-  private renderIcon(definition: IconDefinition, params: IconParams) {
-    const renderedIcon = icon(definition, params);
-    this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(renderedIcon.html.join('\n'));
   }
 }

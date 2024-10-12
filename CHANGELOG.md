@@ -5,6 +5,110 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ---
 
+## [0.15.0](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.15.0) - 2024-05-23
+
+Make sure to check [upgrade instructions](https://github.com/FortAwesome/angular-fontawesome/blob/master/UPGRADING.md).
+
+### Added
+
+* Support for Angular 18.
+* Documentation on how to use NPM Kit packages.
+* Documentation on how to correctly use fa-stack in standalone components.
+* Documentation on how to use custom icons.
+* FAQ page with considerations on whether to use this library.
+* Configuration option for the `FontAwesomeTestingModule` to not throw errors when adding icons.
+* Documentation on how to add global styles to the page.
+
+### Fixed
+
+* Documentation for the `rotate` input.
+* Global styles are now correctly added to the page in SSR context.
+
+### Changed
+
+* `icon` input type is now more permissive.
+* `@fortawesome/fontawesome-svg-core` became a regular dependency.
+
+### Removed
+
+* Angular 17.x is no longer supported. If you are using this version, please, stick with version 0.14.1.
+* Deprecated inputs `spin` and `pulse`. Use `animation` input instead.
+* Deprecated inputs `styles` and `classes`.
+
+## [0.14.1](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.14.1) - 2023-12-23
+
+### Fixed
+
+* Removed import from `@fortawesome/fontawesome-common-types`, which was an undeclared dependency.
+
+## [0.14.0](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.14.0) - 2023-11-08
+
+### Added
+
+* Support for Angular 17.
+* Possibility to use all components as standalone.
+
+### Changed
+
+* Examples to use standalone components instead of modules.
+
+### Removed
+
+* Angular 16.x is no longer supported. If you are using this version, please, stick with version 0.13.0.
+
+## [0.13.0](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.13.0) - 2023-05-04
+
+### Added
+
+* Support for Angular 16.
+
+### Removed
+
+* Angular 15.x is no longer supported. If you are using this version, please, stick with version 0.12.1.
+
+## [0.12.1](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.12.1) - 2023-01-09
+
+### Added
+
+* Support for all animations from Font Awesome 6. See [Animating icons](https://fontawesome.com/docs/web/style/animate).
+
+## [0.12.0](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.12.0) - 2022-11-18
+
+Make sure to check [upgrade instructions](https://github.com/FortAwesome/angular-fontawesome/blob/master/UPGRADING.md).
+
+### Added
+
+* Support for Angular 15.
+* Documentation and option in `ng-add` schematic to use new [Sharp Solid](https://blog.fontawesome.com/introducing-font-awesome-sharp/) icons style. 
+
+### Changed
+
+* Documentation on how to create `fa-icon` programmatically updated to not use deprecated `ComponentFactoryResolver`.
+
+### Deprecated
+
+* `classes` and `styles` inputs on all components are deprecated for removal as confusing and generally not useful. See [upgrade instructions](https://github.com/FortAwesome/angular-fontawesome/blob/master/docs/upgrading/0.11.0-0.12.0.md#remove-usage-of-the-deprecated-styles-and-classes-inputs) for the suggested migration path.
+
+### Removed
+
+* Angular 14.x is no longer supported. If you are using this version, please, stick with version 0.11.1.
+
+## [0.11.1](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.11.1) - 2022-06-16
+
+### Fixed
+
+* Added a missing peer dependency on `@angular/core`.
+
+## [0.11.0](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.11.0) - 2022-06-03
+
+### Added
+
+* Support for Angular 14.
+
+### Removed
+
+* Angular 13.x is no longer supported. If you are using this version, please, stick with version 0.10.2.
+
 ## [0.10.2](https://github.com/FortAwesome/angular-fontawesome/releases/tag/0.10.2) - 2022-03-20
 
 ### Added

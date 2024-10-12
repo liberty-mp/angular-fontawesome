@@ -1,4 +1,4 @@
-import { IconDefinition, IconLookup, IconPrefix, IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition, IconLookup, IconPrefix, IconProp } from '../../types';
 import { isIconLookup } from './is-icon-lookup.util';
 
 /**
@@ -12,11 +12,9 @@ export const faNormalizeIconSpec = (
     return iconSpec;
   }
 
-  if (Array.isArray(iconSpec) && (iconSpec as string[]).length === 2) {
+  if (Array.isArray(iconSpec) && iconSpec.length === 2) {
     return { prefix: iconSpec[0], iconName: iconSpec[1] };
   }
 
-  if (typeof iconSpec === 'string') {
-    return { prefix: defaultPrefix, iconName: iconSpec };
-  }
+  return { prefix: defaultPrefix, iconName: iconSpec };
 };

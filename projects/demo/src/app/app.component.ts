@@ -1,6 +1,6 @@
+import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FaConfig, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { IconDefinition, IconName } from '@fortawesome/fontawesome-svg-core';
+import { FaConfig, FaIconLibrary, FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawesome';
 import { faFlag, faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
 import {
   faAdjust,
@@ -8,24 +8,29 @@ import {
   faBell,
   faCircle,
   faCoffee,
+  faCog,
   faEllipsisH,
   faFighterJet,
   faFlag as solidFlag,
+  faHeart,
   faMagic,
+  faSpinner,
   faSquare,
-  faSync,
   faTimes,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { AlternatePrefixComponent } from './alternate-prefix.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [DecimalPipe, FontAwesomeModule, AlternatePrefixComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   faBell = faBell;
-  faSync = faSync;
+  faCog = faCog;
   faFlag = faFlag;
   solidFlag = solidFlag;
   faTimes = faTimes;
@@ -38,17 +43,19 @@ export class AppComponent {
   faEllipsisH = faEllipsisH;
   faFighterJet = faFighterJet;
   faBatteryQuarter = faBatteryQuarter;
+  faHeart = faHeart;
+  faSpinner = faSpinner;
   faDummy: IconDefinition = {
     prefix: 'fad',
-    iconName: 'dummy' as IconName,
-    icon: [512, 512, [], 'f030', ['M50 50 H412 V250 H50 Z', 'M50 262 H412 V462 H50 Z']],
+    iconName: 'dummy',
+    icon: [512, 512, [], '', ['M50 50 H412 V250 H50 Z', 'M50 262 H412 V462 H50 Z']],
   };
 
   notificationsCounter = 1000;
-  isSyncAnimated = true;
+  isAnimated = true;
   magicLevel = 0;
 
-  selectedPosition: string;
+  selectedPosition: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
 
   constructor(library: FaIconLibrary, faConfig: FaConfig) {
     // Notice that we're adding two different icon objects to the library.

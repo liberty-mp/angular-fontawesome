@@ -5,12 +5,12 @@ Thanks for taking the time to consider contributing to the project. You will fin
 ## Prerequisites
 
 * [git](https://git-scm.com/downloads)
-* [node](https://nodejs.org/en/download/)
-* [yarn](https://yarnpkg.com/en/docs/install)
+* [node 18+](https://nodejs.org/en/download/)
 
 ## Setting up the local environment
 
 1. `git clone https://github.com/FortAwesome/angular-fontawesome`
+1. `corepack enable` - to get the global `yarn` command 
 1. `yarn` - install dependencies
 1. `yarn build:watch` (in terminal 1) - build the library and keep watching for changes
 1. `yarn start` (in terminal 2) - start sample application using library distribution from the previous step
@@ -51,6 +51,6 @@ Command     | Purpose
 1. `npm publish` - publish to public registry
 1. `npm publish --registry https://npm.fontawesome.com` - publish to Pro registry
 1. `git commit -a -m 'Release VERSION'`
-1. `git tag <version> && git push && git push --tags` - create a tag and push all changes to GitHub
+1. `git tag <version> && git push upstream && git push upstream --tags` - create a tag and push all changes to GitHub
 1. Create a [new release](https://github.com/FortAwesome/angular-fontawesome/releases/new) with CHANGELOG details
 1. Update StackBlitz sample projects: [one](https://stackblitz.com/edit/angular-ivy-7jrcne) and [two](https://stackblitz.com/edit/angular-ivy-9mvggg)

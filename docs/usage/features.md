@@ -23,9 +23,9 @@ The following features are available as part of Font Awesome. Note that the synt
 [FontAwesome Spec](https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons):
 
 ```html
-<fa-icon [icon]="['fas', 'coffee']" rotate="90"></fa-icon>
-<fa-icon [icon]="['fas', 'coffee']" rotate="180"></fa-icon>
-<fa-icon [icon]="['fas', 'coffee']" rotate="270"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" [rotate]="90"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" [rotate]="180"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" [rotate]="270"></fa-icon>
 ```
 
 ### Flip
@@ -41,8 +41,9 @@ The following features are available as part of Font Awesome. Note that the synt
 [FontAwesome Spec](https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons)
 
 ```html
-<fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-<fa-icon [icon]="['fas', 'spinner']" [pulse]="true"></fa-icon>
+<fa-icon [icon]="['fas', 'cog']" animation="spin"></fa-icon>
+<fa-icon [icon]="['fas', 'heart']" animation="beat"></fa-icon>
+<fa-icon [icon]="['fas', 'bell']" animation="shake"></fa-icon>
 ```
 
 ### Border
@@ -60,16 +61,21 @@ The following features are available as part of Font Awesome. Note that the synt
 <fa-icon [icon]="['fas', 'coffee']" pull="right"></fa-icon>
 ```
 
-### Custom Classes
+### Custom styles
 
-```html
-<fa-icon [icon]="['fas', 'coffee']" [classes]="['my-icon-class']"></fa-icon>
+Simple styles can be applied using usual [class and style bindings](https://angular.io/guide/class-binding):
+
+```css
+.red-icon {
+  color: red;
+}
 ```
 
-### Default Style
 ```html
-<fa-icon [icon]="['fas', 'coffee']" [styles]="{'stroke': 'red', 'color': 'red'}"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" class="red-icon" [style]="{display: 'inline-block', padding: '5px'}"></fa-icon>
 ```
+
+For more advanced styling, see [Styling icon internals](../guide/styling-icon-internals.md).
 
 ## Duotone icons
 
@@ -124,7 +130,7 @@ The following features are available as part of Font Awesome. Note that the synt
 
 ### Stateful Animations
 ```html
-<fa-icon [icon]="['fas', 'sync']" [spin]="isSyncAnimated" (click)="isSyncAnimated=!isSyncAnimated"></fa-icon>
+<fa-icon [icon]="['fas', 'sync']" [animation]="isSyncAnimated ? 'spin' : undefined" (click)="isSyncAnimated=!isSyncAnimated"></fa-icon>
 ```
 
 ### Transform within binding:
@@ -147,6 +153,8 @@ Each `<fa-icon>` declared inside an `<fa-stack>` element **must** include the `s
   <fa-icon [icon]="solidFlag" [inverse]="true" stackItemSize="1x"></fa-icon>
 </fa-stack>
 ```
+
+When using standalone components, make sure to also add `FaStackItemSizeDirective` to the imports alongside with the `FaStackComponent`. Without the directive, the stacked icon will not render correctly.
 
 ### Layers
 [FontAwesome Spec](https://fontawesome.com/how-to-use/on-the-web/styling/layering):
@@ -180,22 +188,18 @@ Each `<fa-icon>` declared inside an `<fa-stack>` element **must** include the `s
 
 ### Programmatic API
 
-To create `FaIconComponent` dynamically using `ComponentFactoryResolver`:
+To create `FaIconComponent` dynamically:
 
 ```ts
 @Component({
   selector: 'fa-host',
-  template: '<ng-container #host></ng-container>'
+  template: '<button (click)="createIcon()">Create</button><br><ng-container #host></ng-container>'
 })
 class HostComponent {
   @ViewChild('host', {static: true, read: ViewContainerRef}) container: ViewContainerRef;
 
-  constructor(private cfr: ComponentFactoryResolver) {
-  }
-
   createIcon() {
-    const factory = this.cfr.resolveComponentFactory(FaIconComponent);
-    const componentRef = this.container.createComponent(factory);
+    const componentRef = this.container.createComponent(FaIconComponent);
     componentRef.instance.icon = faUser;
     // Note that FaIconComponent.render() should be called to update the
     // rendered SVG after setting/updating component inputs.
@@ -217,7 +221,7 @@ class HostComponent {
   @ViewChild(FaIconComponent, {static: true}) iconComponent: FaIconComponent;
 
   spinIcon() {
-    this.iconComponent.spin = true;
+    this.iconComponent.animation = 'spin';
     // Note that FaIconComponent.render() should be called to update the
     // rendered SVG after setting/updating component inputs.
     this.iconComponent.render();

@@ -37,12 +37,72 @@
 <h3>Change Size</h3>
 <fa-icon [icon]="faAdjust" size="2x"></fa-icon>
 
-<h3>Animation</h3>
-<p>Click to toggle animation.</p>
-<fa-icon [icon]="faSync" [spin]="isSyncAnimated" (click)="isSyncAnimated = !isSyncAnimated"></fa-icon>
+<h3>Change color</h3>
+
+<p>Using custom style: <fa-icon [icon]="faAdjust" [style.color]="'red'"></fa-icon></p>
+<p>Using custom class: <fa-icon [icon]="faAdjust" class="green-icon"></fa-icon></p>
+
+<h3>Rotate</h3>
+
+<fa-icon icon="user" [rotate]="90"></fa-icon>
+
+<h3>Animations</h3>
+
+<button type="button" (click)="isAnimated = !isAnimated">Toggle animations</button>
+
+<p>
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'beat' : undefined"></fa-icon>&nbsp;
+  <fa-icon
+    [icon]="faHeart"
+    [animation]="isAnimated ? 'beat' : undefined"
+    style="--fa-animation-duration: 0.5s"
+  ></fa-icon
+  >&nbsp;
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'beat' : undefined" style="--fa-beat-scale: 2"></fa-icon>
+</p>
+
+<p>
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'fade' : undefined"></fa-icon>&nbsp;
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'fade' : undefined" style="--fa-fade-opacity: 0.1"></fa-icon
+  >&nbsp;
+</p>
+
+<p>
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'beat-fade' : undefined"></fa-icon>&nbsp;
+  <fa-icon
+    [icon]="faHeart"
+    [animation]="isAnimated ? 'beat-fade' : undefined"
+    style="--fa-beat-fade-opacity: 0.1"
+  ></fa-icon
+  >&nbsp;
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'beat-fade' : undefined" style="--fa-beat-fade-scale: 2"></fa-icon
+  >&nbsp;
+</p>
+
+<p><fa-icon [icon]="faHeart" [animation]="isAnimated ? 'bounce' : undefined"></fa-icon>&nbsp;</p>
+
+<p>
+  <fa-icon [icon]="faHeart" [animation]="isAnimated ? 'flip' : undefined"></fa-icon>&nbsp;
+  <fa-icon
+    [icon]="faHeart"
+    [animation]="isAnimated ? 'flip' : undefined"
+    style="--fa-flip-x: 1; --fa-flip-y: 0"
+  ></fa-icon
+  >&nbsp;
+</p>
+
+<p><fa-icon [icon]="faHeart" [animation]="isAnimated ? 'shake' : undefined"></fa-icon>&nbsp;</p>
+
+<p>
+  <fa-icon [icon]="faCog" [animation]="isAnimated ? 'spin' : undefined"></fa-icon>&nbsp;
+  <fa-icon [icon]="faCog" [animation]="isAnimated ? 'spin-reverse' : undefined"></fa-icon>&nbsp;
+  <fa-icon [icon]="faSpinner" [animation]="isAnimated ? 'spin-pulse' : undefined"></fa-icon>&nbsp;
+  <fa-icon [icon]="faSpinner" [animation]="isAnimated ? 'spin-pulse-reverse' : undefined"></fa-icon>&nbsp;
+</p>
+
 <p>Slide to turn up the magic.</p>
 <fa-icon [icon]="faMagic" transform="rotate-{{ magicLevel }}"></fa-icon>
-<input type="range" [value]="magicLevel" (input)="magicLevel = $event.target.value" />
+<input type="range" [value]="magicLevel" (input)="magicLevel = $any($event.target).value" />
 
 <h3>Stack</h3>
 <p>Stack multiple icons into one.</p>
@@ -55,12 +115,12 @@
 <p>Custom icons created with multiple layers.</p>
 <div>
   <fa-layers [fixedWidth]="true" size="4x">
-    <fa-icon [icon]="faCircle" [styles]="{ color: 'Tomato' }"></fa-icon>
+    <fa-icon [icon]="faCircle" [style.color]="'Tomato'"></fa-icon>
     <fa-icon [icon]="faTimes" [inverse]="true" transform="shrink-6"></fa-icon>
   </fa-layers>
   <fa-layers [fixedWidth]="true" size="4x">
     <fa-icon [icon]="faSquare"></fa-icon>
-    <fa-icon [icon]="faBatteryQuarter" transform="shrink-8" [styles]="{ color: 'Tomato' }"></fa-icon>
+    <fa-icon [icon]="faBatteryQuarter" transform="shrink-8" [style.color]="'Tomato'"></fa-icon>
   </fa-layers>
   <fa-layers [fixedWidth]="true" size="4x">
     <fa-icon [icon]="faFighterJet"></fa-icon>
@@ -73,12 +133,7 @@
 <div>
   <fa-layers [fixedWidth]="true" size="4x">
     <fa-icon [icon]="faFlag"></fa-icon>
-    <fa-layers-text
-      title="Fort Awesome"
-      [content]="'Fa'"
-      transform="up-4"
-      [styles]="{ 'font-size': '0.3em' }"
-    ></fa-layers-text>
+    <fa-layers-text title="Fort Awesome" [content]="'Fa'" transform="up-4" [style.font-size]="'0.3em'"></fa-layers-text>
   </fa-layers>
 </div>
 
@@ -90,7 +145,7 @@
       [min]="1000"
       [max]="2000"
       [value]="notificationsCounter"
-      (input)="notificationsCounter = $event.target.value"
+      (input)="notificationsCounter = $any($event.target).value"
     />
   </div>
   <div class="selection">

@@ -1,4 +1,5 @@
-import { Component, HostBinding, Input, OnChanges, Optional, SimpleChanges } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, HostBinding, inject, Input, OnChanges, Optional, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   FlipProp,
@@ -6,18 +7,20 @@ import {
   PullProp,
   RotateProp,
   SizeProp,
-  Styles,
   text,
   TextParams,
   Transform,
 } from '@fortawesome/fontawesome-svg-core';
+import { FaConfig } from '../config';
 import { faWarnIfParentNotExist } from '../shared/errors/warn-if-parent-not-exist';
 import { FaProps } from '../shared/models/props.model';
 import { faClassList } from '../shared/utils/classlist.util';
+import { ensureCss } from '../shared/utils/css';
 import { FaLayersComponent } from './layers.component';
 
 @Component({
   selector: 'fa-layers-text',
+  standalone: true,
   template: '',
   host: {
     class: 'ng-fa-layers-text',
@@ -26,10 +29,6 @@ import { FaLayersComponent } from './layers.component';
 export class FaLayersTextComponent implements OnChanges {
   @Input() content: string;
   @Input() title?: string;
-  @Input() styles?: Styles;
-  @Input() classes?: string[] = [];
-  @Input() spin?: boolean;
-  @Input() pulse?: boolean;
   @Input() flip?: FlipProp;
   @Input() size?: SizeProp;
   @Input() pull?: PullProp;
@@ -41,7 +40,13 @@ export class FaLayersTextComponent implements OnChanges {
 
   @HostBinding('innerHTML') renderedHTML: SafeHtml;
 
-  constructor(@Optional() private parent: FaLayersComponent, private sanitizer: DomSanitizer) {
+  private document = inject(DOCUMENT);
+  private config = inject(FaConfig);
+
+  constructor(
+    @Optional() private parent: FaLayersComponent,
+    private sanitizer: DomSanitizer,
+  ) {
     faWarnIfParentNotExist(this.parent, 'FaLayersComponent', this.constructor.name);
   }
 
@@ -58,8 +63,6 @@ export class FaLayersTextComponent implements OnChanges {
   protected buildParams(): TextParams {
     const classOpts: FaProps = {
       flip: this.flip,
-      spin: this.spin,
-      pulse: this.pulse,
       border: this.border,
       inverse: this.inverse,
       size: this.size || null,
@@ -72,13 +75,13 @@ export class FaLayersTextComponent implements OnChanges {
 
     return {
       transform: parsedTransform,
-      classes: [...faClassList(classOpts), ...this.classes],
+      classes: faClassList(classOpts),
       title: this.title,
-      styles: this.styles,
     };
   }
 
   private updateContent(params: TextParams) {
+    ensureCss(this.document, this.config);
     this.renderedHTML = this.sanitizer.bypassSecurityTrustHtml(text(this.content || '', params).html.join('\n'));
   }
 }

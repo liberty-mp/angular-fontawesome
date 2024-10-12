@@ -1,6 +1,5 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faUser as faUserRegular } from '@fortawesome/free-regular-svg-icons';
 import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs';
@@ -8,6 +7,7 @@ import { startWith } from 'rxjs/operators';
 import { initTest, queryByCss } from '../../testing/helpers';
 import { FaConfig } from '../config';
 import { FaIconLibrary } from '../icon-library';
+import { IconProp } from '../types';
 import { FaIconComponent } from './icon.component';
 
 describe('FaIconComponent', () => {
@@ -28,20 +28,20 @@ describe('FaIconComponent', () => {
   it('should support binding to boolean inputs', () => {
     @Component({
       selector: 'fa-host',
-      template: '<fa-icon [icon]="faUser" [spin]="isAnimated"></fa-icon>',
+      template: '<fa-icon [icon]="faUser" [inverse]="isInverse"></fa-icon>',
     })
     class HostComponent {
       faUser = faUser;
-      isAnimated = false;
+      isInverse = false;
     }
 
     const fixture = initTest(HostComponent);
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').classList.contains('fa-spin')).toBeFalsy();
+    expect(queryByCss(fixture, 'svg').classList.contains('fa-inverse')).toBeFalsy();
 
-    fixture.componentInstance.isAnimated = true;
+    fixture.componentInstance.isInverse = true;
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').classList.contains('fa-spin')).toBeTruthy();
+    expect(queryByCss(fixture, 'svg').classList.contains('fa-inverse')).toBeTruthy();
   });
 
   it('should be able to create component dynamically', () => {
@@ -52,11 +52,8 @@ describe('FaIconComponent', () => {
     class HostComponent {
       @ViewChild('host', { static: true, read: ViewContainerRef }) container: ViewContainerRef;
 
-      constructor(private cfr: ComponentFactoryResolver) {}
-
       createIcon() {
-        const factory = this.cfr.resolveComponentFactory(FaIconComponent);
-        const componentRef = this.container.createComponent(factory);
+        const componentRef = this.container.createComponent(FaIconComponent);
         componentRef.instance.icon = faUser;
         componentRef.instance.render();
       }
@@ -86,7 +83,7 @@ describe('FaIconComponent', () => {
     fixture.detectChanges();
     expect(queryByCss(fixture, 'svg').classList.contains('fa-spin')).toBeFalsy();
 
-    fixture.componentInstance.iconComponent.spin = true;
+    fixture.componentInstance.iconComponent.animation = 'spin';
     fixture.componentInstance.iconComponent.render();
     fixture.detectChanges();
     expect(queryByCss(fixture, 'svg').classList.contains('fa-spin')).toBeTruthy();

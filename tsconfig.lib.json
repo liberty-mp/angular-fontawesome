@@ -2,18 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/lib",
-    "declarationMap": true,
     "declaration": true,
+    "declarationMap": true,
     "inlineSources": true,
-    "types": [],
-    "lib": ["dom", "es2018"]
+    "types": ["node"]
   },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
-  },
-  "exclude": ["src/testing/*.ts", "src/test.ts", "**/*.spec.ts"]
+  "exclude": ["src/testing/*.ts", "**/*.spec.ts"]
 }

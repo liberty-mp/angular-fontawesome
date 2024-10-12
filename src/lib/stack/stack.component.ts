@@ -3,6 +3,7 @@ import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'fa-stack',
+  standalone: true,
   template: `<ng-content></ng-content>`,
 })
 export class FaStackComponent implements OnInit, OnChanges {
@@ -14,7 +15,10 @@ export class FaStackComponent implements OnInit, OnChanges {
    */
   @Input() size?: SizeProp;
 
-  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
+  constructor(
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+  ) {}
 
   ngOnInit() {
     this.renderer.addClass(this.elementRef.nativeElement, 'fa-stack');

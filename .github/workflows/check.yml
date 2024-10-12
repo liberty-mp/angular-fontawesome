@@ -8,13 +8,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: '20'
       - uses: actions/cache@v2
         with:
           path: .yarn/cache
           key: ${{ hashFiles('yarn.lock') }}
+      - run: corepack enable
       - run: yarn
-      - run: yarn add -D @fortawesome/fontawesome-svg-core@1.2.36 @fortawesome/free-regular-svg-icons@5.15.4 @fortawesome/free-solid-svg-icons@5.15.4
+      - run: yarn add -D @fortawesome/free-regular-svg-icons@5.15.4 @fortawesome/free-solid-svg-icons@5.15.4
       - run: yarn format:enforce
       - run: yarn lint
       - run: yarn test
@@ -22,8 +23,9 @@ jobs:
       - run: yarn build
       - run: yarn build:schematics
       - run: yarn test:demo
-      - run: yarn webdriver-manager update --versions.chrome=`google-chrome --version | awk '{print $3}'` --standalone false --gecko false
-      - run: yarn test:integration --configuration=ci
+      - run: yarn add -D chromedriver@~`google-chrome --version | awk '{print $3}' | awk -F. '{print $1}'`
+      - run: yarn test:integration
+      - run: yarn test:integration:ssr
   check6:
     name: Font Awesome 6
     runs-on: ubuntu-latest
@@ -31,11 +33,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: '20'
       - uses: actions/cache@v2
         with:
           path: .yarn/cache
           key: ${{ hashFiles('yarn.lock') }}
+      - run: corepack enable
       - run: yarn
       - run: yarn format:enforce
       - run: yarn lint
@@ -44,5 +47,6 @@ jobs:
       - run: yarn build
       - run: yarn build:schematics
       - run: yarn test:demo
-      - run: yarn webdriver-manager update --versions.chrome=`google-chrome --version | awk '{print $3}'` --standalone false --gecko false
-      - run: yarn test:integration --configuration=ci
+      - run: yarn add -D chromedriver@~`google-chrome --version | awk '{print $3}' | awk -F. '{print $1}'`
+      - run: yarn test:integration
+      - run: yarn test:integration:ssr

@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faDummy, initTest, queryByCss } from '../../testing/helpers';
 import { FaDuotoneIconComponent } from './duotone-icon.component';
@@ -43,7 +43,7 @@ describe('FaDuotoneIconComponent', () => {
 
     const fixture = initTest(HostComponent);
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-primary-opacity')).toBe(' 0.1');
+    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-primary-opacity')).toBe('0.1');
   });
 
   it('should allow to customize opacity of the secondary layer', () => {
@@ -57,7 +57,7 @@ describe('FaDuotoneIconComponent', () => {
 
     const fixture = initTest(HostComponent);
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-secondary-opacity')).toBe(' 0.9');
+    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-secondary-opacity')).toBe('0.9');
   });
 
   it('should allow to customize color of the primary layer', () => {
@@ -71,7 +71,7 @@ describe('FaDuotoneIconComponent', () => {
 
     const fixture = initTest(HostComponent);
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-primary-color')).toBe(' red');
+    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-primary-color')).toBe('red');
   });
 
   it('should allow to customize color of the secondary layer', () => {
@@ -85,7 +85,7 @@ describe('FaDuotoneIconComponent', () => {
 
     const fixture = initTest(HostComponent);
     fixture.detectChanges();
-    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-secondary-color')).toBe(' red');
+    expect(queryByCss(fixture, 'svg').style.getPropertyValue('--fa-secondary-color')).toBe('red');
   });
 
   it('should throw if specified icon is not a Duotone icon', () => {
@@ -115,11 +115,8 @@ describe('FaDuotoneIconComponent', () => {
     class HostComponent {
       @ViewChild('host', { static: true, read: ViewContainerRef }) container: ViewContainerRef;
 
-      constructor(private cfr: ComponentFactoryResolver) {}
-
       createIcon() {
-        const factory = this.cfr.resolveComponentFactory(FaDuotoneIconComponent);
-        const componentRef = this.container.createComponent(factory);
+        const componentRef = this.container.createComponent(FaDuotoneIconComponent);
         componentRef.instance.icon = faDummy;
         componentRef.instance.render();
       }

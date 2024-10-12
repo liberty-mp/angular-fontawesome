@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition as CoreIconDefinition, IconParams } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition, IconProp } from '../types';
 import { FaIconComponent } from './icon.component';
 
 @Component({
   selector: 'fa-duotone-icon',
+  standalone: true,
   template: ``,
 })
 export class FaDuotoneIconComponent extends FaIconComponent {
@@ -48,7 +50,7 @@ export class FaDuotoneIconComponent extends FaIconComponent {
    */
   @Input() secondaryColor?: string;
 
-  protected findIconDefinition(i: IconProp | IconDefinition): IconDefinition | null {
+  protected findIconDefinition(i: IconProp | IconDefinition): CoreIconDefinition | null {
     const definition = super.findIconDefinition(i);
 
     if (definition != null && !Array.isArray(definition.icon[4])) {
@@ -63,11 +65,21 @@ export class FaDuotoneIconComponent extends FaIconComponent {
     return definition;
   }
 
-  protected buildParams() {
+  protected buildParams(): IconParams {
     const params = super.buildParams();
 
     if (this.swapOpacity === true || this.swapOpacity === 'true') {
-      params.classes.push('fa-swap-opacity');
+      if (Array.isArray(params.classes)) {
+        params.classes.push('fa-swap-opacity');
+      } else if (typeof params.classes === 'string') {
+        params.classes = [params.classes, 'fa-swap-opacity'];
+      } else {
+        params.classes = ['fa-swap-opacity'];
+      }
+    }
+
+    if (params.styles == null) {
+      params.styles = {};
     }
     if (this.primaryOpacity != null) {
       params.styles['--fa-primary-opacity'] = this.primaryOpacity.toString();
