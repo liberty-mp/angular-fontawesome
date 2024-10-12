@@ -93,5 +93,5 @@
     "@angular/core": "^18.0.0"
   },
   "schematics": "./schematics/collection.json",
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@1.22.22"
 }
